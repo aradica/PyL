@@ -46,16 +46,19 @@ def drawSystem(turtle, instructions, angle, d):
 
 
 #axiom
-string = "F-G-G"
+string = "FX"
 #rule dictionary
 rules = {
-    "F": "F-G+F+G-F",
-    "G": "GG"
+    "X": "X+YF+",
+    "Y": "-FX-Y"
 }
+
+angle = 90
+iterations = 14
 
 
 #number of iterations
-for i in range(5):
+for i in range(iterations):
     string = applyRules(string, rules)
     #print(string)
 
@@ -64,6 +67,6 @@ T.speed("fastest")
 T._tracer(2, 0)
 
 wn = turtle.Screen()
-drawSystem(T, string, 120, 8)
+drawSystem(T, string, angle, 4)
 T._update()
 wn.exitonclick()
