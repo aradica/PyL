@@ -10,8 +10,8 @@ Symbol interpretations:
 F, G	Go forward by some number of units
 f       Go forward by some number of units but don't draw
 B	    Go backward by some number of units
--	    Turn left by some degrees
-+	    Turn right by some degrees
+-	    Turn right by some degrees
++	    Turn left by some degrees
 
 """
 
@@ -29,32 +29,46 @@ def applyRules(string, rules):
 
 
 def drawSystem(turtle, instructions, angle, d):
+    stack = []
     for cmd in instructions:
         if cmd == "F" or cmd == "G":
             turtle.forward(d)
+
+        elif cmd == "[":
+            stack.append((turtle.xcor(), turtle.ycor(), turtle.heading()))
+
+        elif cmd == "]":
+            turtle.penup()
+            x, y, h = stack.pop()
+            turtle.setpos(x, y)
+            turtle.setheading(h)
+            turtle.pendown()
+
         elif cmd == "f":
             turtle.penup()
             turtle.forward(d)
             turtle.pendown()
+
         elif cmd == "B":
             turtle.backward(d)
-        elif cmd == "+":
-            turtle.right(angle)
+
         elif cmd == "-":
+            turtle.right(angle)
+            
+        elif cmd == "+":
             turtle.left(angle)
         
 
 
 #axiom
-string = "FX"
+string = "F"
 #rule dictionary
 rules = {
-    "X": "X+YF+",
-    "Y": "-FX-Y"
+    "F": "F[+F]F[-F]F"
 }
 
-angle = 90
-iterations = 14
+angle = 25.7
+iterations = 5
 
 
 #number of iterations
@@ -67,6 +81,6 @@ T.speed("fastest")
 T._tracer(2, 0)
 
 wn = turtle.Screen()
-drawSystem(T, string, angle, 4)
+drawSystem(T, string, angle, 2)
 T._update()
 wn.exitonclick()
