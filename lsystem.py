@@ -57,7 +57,6 @@ def drawSystem(turtle, instructions, angle, d):
             
         elif cmd == "+":
             turtle.left(angle)
-        
 
 
 #axiom
